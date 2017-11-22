@@ -1,5 +1,9 @@
 {
+    "scripts": {
+        "precommit": "lerna run --concurrency 1 --stream precommit"
+    },
 	"devDependencies": {
+		"husky": "^0.14.3",
 		"lerna": "^2.5.1"
 	}
 }

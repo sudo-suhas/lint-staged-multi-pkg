@@ -1,0 +1,16 @@
+{
+  "name": "say-bye",
+  "version": "1.0.0",
+  "description": "Just say Bye!",
+  "main": "lib/index.js",
+  "scripts": {
+    "precommit": "lint-staged",
+    "test": "echo \"LOL\" && exit 1"
+  },
+  "author": "Suhas Karanth <sudo.suhas@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "lint-staged": "^5.0.0"
+  }
+}

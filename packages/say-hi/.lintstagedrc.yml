@@ -1,0 +1,4 @@
+linters:
+  src/*.js:
+    - eslint --fix
+    - git add

@@ -93,6 +93,101 @@ lerna success - say-hi
 Done in 6.75s.
 ```
 
+### What if I don't want to or can't use `lerna`?
+
+You might not want to use `lerna` either because you think it is overkill or if
+you have a different monorepo setup than the one required by `lerna`. You can
+still use `lint-staged`, though not as easily:
+
+- [Install `lint-staged` at the package root](#install-lint-staged-at-the-package-root)
+- [Manually call `precommit` in each package](#manually-call-precommit-in-each-package)
+
+#### Install `lint-staged` at the package root
+
+Install `lint-staged` and `husky` at the project root and configure all linters
+at the root:
+
+Project structure:
+
+```
+.
+|-- .git
+|-- .gitignore
+|-- .lintstagedrc.yml 🢀 Our `lint-staged` config at the monorepo root.
+|-- package.json
+|-- prj-1
+|   |-- .eslintrc.yml
+|   |-- .gitignore
+|   |-- package.json
+|   |-- src
+|   |   `-- index.js
+|   `-- yarn.lock
+`-- prj-2
+    |-- .eslintrc.yml
+    |-- .gitignore
+    |-- package.json
+    |-- src
+    |   `-- index.js
+    `-- yarn.lock
+```
+
+`.lintstagedrc.yml`:
+
+```yml
+linters:
+  prj-1/*.js:
+    - eslint --fix
+    - some-other-cmd
+    - git add
+  prj-2/**/*.js:
+    - eslint --fix
+    - git add
+```
+
+_Note: All linters would have to be installed in the root package._
+
+#### Manually call `precommit` in each package
+
+Install `husky` at the project root and setup the pre-commit hook to execute
+the `precommit` script in each package. [`npm-run-all`][npm-run-all] could also
+be used to make things a bit easier:
+
+```js
+// package.json
+{
+  "...": "...",
+  "scripts": {
+    "precommit:prj-1": "cd prj-1 && npm run precommit",
+    "precommit:prj-2": "cd prj-2 && npm run precommit",
+    "precommit": "npm-run-all precommit:*"
+  },
+}
+```
+
+Project structure:
+
+```
+.
+|-- .gitignore
+|-- package.json
+|-- prj-1
+|   |-- .eslintrc.yml
+|   |-- .gitignore
+|   |-- .lintstagedrc.yml 🢀 Each project has it's own config.
+|   |-- package.json
+|   |-- src
+|   |   `-- index.js
+|   `-- yarn.lock
+`-- prj-2
+    |-- .eslintrc.yml
+    |-- .gitignore
+    |-- .lintstagedrc.yml
+    |-- package.json
+    |-- src
+    |   `-- index.js
+    `-- yarn.lock
+```
+
 ## License
 
 MIT © [Suhas Karanth][sudo-suhas]
@@ -103,3 +198,4 @@ MIT © [Suhas Karanth][sudo-suhas]
 [sudo-suhas]: https://github.com/sudo-suhas
 [husky-docs]: https://github.com/typicode/husky/blob/dev/docs.md#multi-package-repository-monorepo
 [lint-staged-issue-225]: https://github.com/okonet/lint-staged/issues/225
+[npm-run-all]: https://github.com/mysticatea/npm-run-all

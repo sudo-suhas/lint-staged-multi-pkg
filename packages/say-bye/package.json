@@ -10,7 +10,7 @@
   "author": "Suhas Karanth <sudo.suhas@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^4.11.0",
-    "lint-staged": "^5.0.0"
+    "eslint": "^5.15.3",
+    "lint-staged": "^7.2.0"
   }
 }

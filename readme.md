@@ -9,10 +9,13 @@ package project with [`lerna`][lerna] and [`husky`][husky].
 [husky docs][husky-docs].
 
 The pre-commit hook is configured with the script
-_**`lerna run --concurrency 1 --stream precommit`**_. This executes the
-`precommit` script for each package(if it exists). Furthermore, concurrent
-execution is disabled because it can cause problems during `git add`(see
-[okonet/lint-staged#225][lint-staged-issue-225]).
+_**`lerna run --concurrency 1 --stream precommit --since HEAD`**_. This
+executes the `precommit` script for each package (if it exists). Execution is
+limited to only those packages with file changes by using the `--since HEAD`
+option (see
+[sudo-suhas/lint-staged-multi-pkg#4][lint-staged-multi-pkg-issues-4]).
+Furthermore, concurrent execution is disabled because it can cause problems
+during `git add` (see [okonet/lint-staged#225][lint-staged-issue-225]).
 
 ### `lint-staged` configuration
 
@@ -198,4 +201,5 @@ MIT © [Suhas Karanth][sudo-suhas]
 [sudo-suhas]: https://github.com/sudo-suhas
 [husky-docs]: https://github.com/typicode/husky/blob/v1.3.1/DOCS.md#multi-package-repository-monorepo
 [lint-staged-issue-225]: https://github.com/okonet/lint-staged/issues/225
+[lint-staged-multi-pkg-issues-4]: https://github.com/sudo-suhas/lint-staged-multi-pkg/issues/4
 [npm-run-all]: https://github.com/mysticatea/npm-run-all

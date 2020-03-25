@@ -11,9 +11,10 @@ package project with [`lerna`][lerna] and [`husky`][husky].
 The pre-commit hook is configured with the script
 _**`lerna run --concurrency 1 --stream precommit --since HEAD`**_. This
 executes the `precommit` script for each package (if it exists). Execution is
-limited to only those packages with file changes by using the `--since HEAD`
-option (see
-[sudo-suhas/lint-staged-multi-pkg#4][lint-staged-multi-pkg-issues-4]).
+limited to only those packages with modified files, however the `--since HEAD`
+option does not consider whether the file is staged. To further limit
+`precommit` to only staged files please look at the discussion in
+[sudo-suhas/lint-staged-multi-pkg#4][lint-staged-multi-pkg-issues-4].
 Furthermore, concurrent execution is disabled because it can cause problems
 during `git add` (see [okonet/lint-staged#225][lint-staged-issue-225]).
 
